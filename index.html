@@ -4,30 +4,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FRUTO TO YOU</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
   <style>
     :root {
-      --bg: #e7e4e1;
+      --bg: #dfddda;
+      --machine: #f4f2ee;
+      --machine-shadow: #d8d4cf;
+      --screen: #121212;
+      --panel: #0e0e0e;
       --text: #111111;
-      --muted: #4d4d4d;
-      --yellow: #efd53f;
-      --green: #4da47b;
-      --white: #f7f6f2;
-      --orange: #f39a1f;
-      --leaf: #7dd957;
-      --blue: #4d56ff;
-      --panel: rgba(255,255,255,0.42);
-      --line: rgba(17,17,17,0.12);
-      --max: 1200px;
-      --radius: 18px;
-      --transition: 650ms cubic-bezier(.22,1,.36,1);
+      --muted: #5a5a5a;
+      --red: #ff3b30;
+      --red-dark: #420000;
+      --yellow: #f2d439;
+      --green: #36a56d;
+      --blue: #4253ff;
+      --white: #f8f7f2;
+      --orange: #f29a1f;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     html, body {
       margin: 0;
@@ -36,14 +36,13 @@
       color: var(--text);
       font-family: "Inter", system-ui, sans-serif;
       overflow-x: hidden;
-      scroll-behavior: smooth;
     }
 
     body {
       background-image:
-        radial-gradient(circle at 10% 20%, rgba(255,255,255,0.45) 0, transparent 24%),
-        radial-gradient(circle at 86% 16%, rgba(255,255,255,0.35) 0, transparent 22%),
-        radial-gradient(circle at 30% 80%, rgba(255,255,255,0.22) 0, transparent 18%);
+        radial-gradient(circle at 15% 20%, rgba(255,255,255,.45), transparent 25%),
+        radial-gradient(circle at 82% 14%, rgba(255,255,255,.3), transparent 22%),
+        radial-gradient(circle at 42% 80%, rgba(255,255,255,.18), transparent 20%);
     }
 
     a {
@@ -51,960 +50,1102 @@
       text-decoration: none;
     }
 
-    .wrap {
-      position: relative;
-    }
-
-    .section {
-      min-height: 100svh;
-      display: none;
+    .page {
+      min-height: 100vh;
+      display: flex;
       align-items: center;
       justify-content: center;
-      padding: 34px 20px;
-      opacity: 0;
-      transform: translateY(22px);
-      transition: opacity var(--transition), transform var(--transition);
-      position: relative;
+      padding: 32px 18px;
     }
 
-    .section.active { display: flex; }
-    .section.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .container {
+    .wrap {
       width: 100%;
-      max-width: var(--max);
-      margin: 0 auto;
+      max-width: 1280px;
+      display: grid;
+      grid-template-columns: 760px 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    .machine {
+      background: linear-gradient(180deg, var(--machine) 0%, #ece8e2 100%);
+      border-radius: 20px 20px 28px 28px;
+      box-shadow:
+        0 28px 60px rgba(0,0,0,.08),
+        inset 0 -8px 0 var(--machine-shadow);
+      padding: 22px 22px 30px;
       position: relative;
     }
 
-    .eyebrow {
-      font-size: 12px;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      font-weight: 700;
-      color: var(--muted);
+    .machine-top {
+      border-radius: 18px 18px 12px 12px;
+      background: linear-gradient(180deg, #faf8f5 0%, #efebe6 100%);
+      padding: 18px 18px 16px;
+      position: relative;
+      border: 2px solid rgba(0,0,0,.08);
+    }
+
+    .machine-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
       margin-bottom: 14px;
-    }
-
-    .poster-title {
-      font-family: "Anton", Impact, sans-serif;
-      font-size: clamp(56px, 12vw, 180px);
-      line-height: .9;
-      letter-spacing: -0.02em;
-      text-transform: uppercase;
-      margin: 0;
-    }
-
-    .poster-subtitle {
-      margin-top: 16px;
-      font-size: clamp(16px, 2vw, 22px);
-      line-height: 1.5;
-      max-width: 520px;
-      color: var(--muted);
-      font-weight: 500;
-    }
-
-    .body-text {
-      font-size: 16px;
-      line-height: 1.8;
-      color: var(--muted);
-      max-width: 680px;
-    }
-
-    .button-row {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 28px;
-    }
-
-    button, .button-link {
-      border: 2px solid var(--text);
-      background: var(--text);
-      color: #fff;
-      padding: 13px 18px;
-      font-size: 14px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: .04em;
-      cursor: pointer;
-      transition: transform 180ms ease, background 180ms ease, color 180ms ease;
-      border-radius: 8px;
-      box-shadow: 6px 6px 0 rgba(17,17,17,0.12);
-    }
-
-    button:hover, .button-link:hover {
-      transform: translate(-2px, -2px);
-    }
-
-    .button-ghost {
-      background: transparent;
-      color: var(--text);
-    }
-
-    .opening-layout {
-      min-height: 86svh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
       align-items: center;
     }
 
-    .opening-copy {
-      position: relative;
-      z-index: 2;
-    }
-
-    .opening-art {
-      position: relative;
-      min-height: 620px;
-    }
-
-    /* collage fruit */
-    .fruit-collage {
-      position: absolute;
-      right: 0;
-      top: 10px;
-      width: min(540px, 92%);
-      aspect-ratio: 0.82;
-    }
-
-    .sticker-outline {
-      position: absolute;
-      inset: 0;
-      clip-path: polygon(
-        48% 0%, 63% 0%, 63% 4%, 70% 4%, 70% 10%, 100% 10%, 100% 18%,
-        94% 18%, 94% 26%, 100% 26%, 100% 57%, 92% 57%, 92% 64%, 86% 64%,
-        86% 76%, 79% 76%, 79% 91%, 69% 91%, 69% 100%, 17% 100%, 17% 91%,
-        10% 91%, 10% 84%, 6% 84%, 6% 75%, 0 75%, 0 41%, 7% 41%, 7% 33%, 
-        12% 33%, 12% 22%, 22% 22%, 22% 11%, 34% 11%, 34% 4%, 48% 4%
-      );
-    }
-
-    .outline-yellow {
-      background: var(--yellow);
-      transform: translate(0, 0) scale(1.04);
-    }
-
-    .outline-green {
-      background: var(--green);
-      transform: translate(0, 0) scale(0.99);
-    }
-
-    .outline-white {
-      background: var(--white);
-      transform: translate(0, 0) scale(0.94);
-    }
-
-    .fruit-inner {
-      position: absolute;
-      inset: 9%;
-    }
-
-    .leaf {
-      position: absolute;
-      top: 2%;
-      left: 22%;
-      width: 68%;
-      height: 50%;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(255,255,255,.35), transparent 35%),
-        radial-gradient(circle at 70% 70%, rgba(0,0,0,.05), transparent 36%),
-        linear-gradient(180deg, #98ef67 0%, #7dd957 45%, #62c53d 100%);
-      clip-path: polygon(
-        34% 0%, 42% 26%, 51% 6%, 56% 33%, 68% 0%, 68% 36%, 83% 7%, 77% 44%,
-        100% 24%, 82% 56%, 100% 62%, 72% 73%, 86% 100%, 52% 80%, 50% 100%,
-        34% 76%, 20% 100%, 21% 72%, 0% 80%, 17% 55%, 0% 48%, 24% 36%, 10% 18%, 31% 28%
-      );
-      filter: saturate(1.1);
-      opacity: 0.98;
-    }
-
-    .pineapple {
-      position: absolute;
-      bottom: 7%;
-      left: 16%;
-      width: 46%;
-      height: 38%;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(255,255,255,.28), transparent 30%),
-        radial-gradient(circle at 65% 70%, rgba(255,255,255,.12), transparent 26%),
-        linear-gradient(145deg, #f6b129 0%, #ef8d17 65%, #e97f11 100%);
-      clip-path: polygon(16% 12%, 82% 0%, 100% 24%, 94% 82%, 40% 100%, 4% 72%, 0% 30%);
-      overflow: hidden;
-    }
-
-    .pineapple::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        repeating-linear-gradient(
-          45deg,
-          transparent 0 24px,
-          rgba(232, 108, 22, 0.85) 24px 31px
-        ),
-        repeating-linear-gradient(
-          -45deg,
-          transparent 0 24px,
-          rgba(232, 108, 22, 0.85) 24px 31px
-        );
-      opacity: .9;
-      mix-blend-mode: multiply;
-    }
-
-    .main-word {
-      position: absolute;
-      left: 0;
-      top: 22%;
-      z-index: 3;
+    .brand {
       font-family: "Anton", Impact, sans-serif;
-      font-size: clamp(56px, 8vw, 116px);
-      line-height: .88;
+      font-size: clamp(30px, 4vw, 54px);
+      line-height: .9;
       text-transform: uppercase;
       letter-spacing: -0.02em;
-      max-width: 380px;
     }
 
-    .tag-sticker {
-      position: absolute;
-      z-index: 4;
-      background: var(--blue);
-      color: #fff;
-      padding: 10px 12px;
-      border-radius: 6px;
-      text-transform: uppercase;
-      font-weight: 800;
-      line-height: .95;
-      box-shadow: 6px 6px 0 rgba(17,17,17,0.12);
-      border: 2px solid rgba(255,255,255,.6);
-    }
-
-    .tag-sticker small {
-      display: block;
+    .micro {
       font-size: 11px;
-      margin-top: 6px;
-      opacity: .9;
-      line-height: 1.1;
-    }
-
-    .opening-tag {
-      bottom: 7%;
-      right: 8%;
-      font-size: clamp(20px, 2.4vw, 34px);
-    }
-
-    .grid-poster {
-      display: grid;
-      gap: 18px;
-    }
-
-    .choice-head {
-      margin-bottom: 22px;
-    }
-
-    .choice-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .choice-poster {
-      min-height: 240px;
-      background: rgba(255,255,255,.34);
-      border: 2px solid rgba(17,17,17,.08);
-      border-radius: 14px;
-      overflow: hidden;
-      position: relative;
-      cursor: pointer;
-      transition: transform 200ms ease;
-      padding: 20px;
-    }
-
-    .choice-poster:hover {
-      transform: translate(-3px, -3px) rotate(-0.7deg);
-    }
-
-    .choice-number {
-      position: absolute;
-      top: 14px;
-      left: 16px;
-      font-size: 12px;
       font-weight: 800;
-      letter-spacing: .1em;
+      letter-spacing: .12em;
+      text-transform: uppercase;
       color: var(--muted);
+      margin-bottom: 6px;
     }
 
-    .choice-big {
-      position: absolute;
-      left: 16px;
-      bottom: 16px;
-      z-index: 3;
-      font-family: "Anton", Impact, sans-serif;
-      font-size: clamp(34px, 5vw, 64px);
-      line-height: .9;
-      text-transform: uppercase;
-      max-width: 58%;
-    }
-
-    .mini-collage {
-      position: absolute;
-      right: 4%;
-      top: 10%;
-      width: 44%;
-      height: 78%;
-      transform: rotate(-4deg);
-    }
-
-    .mini-collage .sticker-outline {
-      clip-path: polygon(
-        40% 0%, 60% 0%, 60% 8%, 72% 8%, 72% 18%, 100% 18%, 100% 32%, 90% 32%,
-        90% 42%, 100% 42%, 100% 66%, 86% 66%, 86% 76%, 74% 76%, 74% 100%, 22% 100%,
-        22% 88%, 12% 88%, 12% 76%, 0% 76%, 0% 34%, 10% 34%, 10% 24%, 24% 24%, 24% 12%, 40% 12%
-      );
-    }
-
-    .mini-shape {
-      position: absolute;
-      inset: 18%;
-      border-radius: 14px;
-      background: linear-gradient(145deg, #ffb02d, #ea7e14);
-      clip-path: polygon(18% 0%, 80% 8%, 100% 34%, 90% 100%, 22% 92%, 0% 54%);
-    }
-
-    .mini-shape.green { background: linear-gradient(145deg, #a2ed66, #61c940); }
-    .mini-shape.purple { background: linear-gradient(145deg, #8a6af1, #5d3ee8); }
-    .mini-shape.red { background: linear-gradient(145deg, #ff6581, #d93658); }
-
-    .result-layout,
-    .idea-layout,
-    .about-layout {
-      display: grid;
-      gap: 18px;
-    }
-
-    .result-layout {
-      grid-template-columns: 1.1fr .9fr;
-      align-items: stretch;
-    }
-
-    .poster-panel {
-      background: rgba(255,255,255,0.36);
-      border: 2px solid rgba(17,17,17,.08);
-      border-radius: 14px;
-      padding: 22px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .result-quote {
-      font-family: "Anton", Impact, sans-serif;
-      font-size: clamp(48px, 8vw, 110px);
-      line-height: .9;
-      text-transform: uppercase;
-      letter-spacing: -0.02em;
-      max-width: 700px;
-    }
-
-    .result-meta {
-      margin-top: 18px;
-      font-size: 16px;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .result-fruits {
-      margin-top: 16px;
-      font-size: 17px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: .03em;
-    }
-
-    .result-art {
-      min-height: 560px;
-      position: relative;
-    }
-
-    .result-art .fruit-collage {
-      inset: 20px;
-      width: auto;
-      height: auto;
-    }
-
-    .result-art .main-word {
-      left: 5%;
-      top: 10%;
-      max-width: 50%;
-      font-size: clamp(48px, 7vw, 100px);
-    }
-
-    .result-art .tag-sticker {
-      bottom: 8%;
-      right: 7%;
-    }
-
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap: 18px;
-      margin-top: 18px;
-    }
-
-    .info-box {
-      background: rgba(255,255,255,.42);
-      border: 2px solid rgba(17,17,17,.08);
-      border-radius: 14px;
-      padding: 20px;
-      min-height: 210px;
-    }
-
-    .info-box h3 {
-      font-family: "Anton", Impact, sans-serif;
-      font-size: 34px;
-      line-height: .95;
-      margin: 0 0 12px;
-      text-transform: uppercase;
-      letter-spacing: -0.01em;
-      font-weight: normal;
-    }
-
-    .statement {
-      font-family: "Anton", Impact, sans-serif;
-      font-size: clamp(44px, 7vw, 108px);
-      line-height: .9;
-      text-transform: uppercase;
-      letter-spacing: -0.02em;
-    }
-
-    .about-layout {
-      grid-template-columns: 1fr .8fr;
-      align-items: stretch;
-    }
-
-    .contact-list {
+    .scoreboard-wrap {
       display: flex;
-      flex-wrap: wrap;
       gap: 10px;
-      margin-top: 18px;
-    }
-
-    .contact-pill, .tag-pill {
-      display: inline-flex;
       align-items: center;
-      border: 2px solid var(--text);
-      background: #fff;
-      padding: 10px 12px;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: .04em;
-      box-shadow: 4px 4px 0 rgba(17,17,17,.08);
-    }
-
-    .tag-group {
-      display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 20px;
     }
 
-    .nav-dots {
-      position: fixed;
-      right: 18px;
-      top: 50%;
-      transform: translateY(-50%);
+    .scorebox {
+      min-width: 112px;
+      background: #0c0c0c;
+      border-radius: 10px;
+      padding: 8px 10px 10px;
+      border: 2px solid rgba(255,255,255,.08);
+      box-shadow: inset 0 -4px 0 rgba(255,255,255,.03);
+    }
+
+    .scorebox .label {
+      color: #f2c84d;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .led {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      min-height: 42px;
+      border-radius: 6px;
+      padding: 4px 8px;
+      background:
+        linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+      color: #ff3f34;
+      font-family: monospace;
+      font-size: 34px;
+      font-weight: 700;
+      letter-spacing: .05em;
+      text-shadow: 0 0 8px rgba(255,59,48,.75);
+    }
+
+    .arcade-screen {
+      position: relative;
+      background: #171717;
+      border-radius: 14px;
+      padding: 20px 18px 18px;
+      min-height: 520px;
+      overflow: hidden;
+      border: 6px solid #111;
+      box-shadow:
+        inset 0 0 0 3px rgba(255,255,255,.06),
+        inset 0 0 34px rgba(0,0,0,.55);
+    }
+
+    .light-border {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .light {
+      position: absolute;
+      width: 11px;
+      height: 11px;
+      background: var(--red-dark);
+      border-radius: 2px;
+      animation: chase 1.8s linear infinite;
+      animation-delay: calc(var(--i) * 0.07s);
+    }
+
+    @keyframes chase {
+      0%,
+      100% {
+        background: var(--red-dark);
+        box-shadow: none;
+      }
+      22% {
+        background: #ff3b30;
+        box-shadow:
+          0 0 10px #ff3b30,
+          0 0 18px rgba(255,59,48,.85);
+      }
+      42% {
+        background: var(--red-dark);
+        box-shadow: none;
+      }
+    }
+
+    body.machine-active .light {
+      animation-duration: .55s;
+    }
+
+    body.machine-flash .light {
+      animation: flash .22s linear 3;
+    }
+
+    @keyframes flash {
+      0%, 100% {
+        background: #fff4b3;
+        box-shadow: 0 0 10px #fff4b3, 0 0 18px #fff4b3;
+      }
+      50% {
+        background: #ff3b30;
+        box-shadow: 0 0 10px #ff3b30, 0 0 18px #ff3b30;
+      }
+    }
+
+    .light.top    { top: 8px; }
+    .light.bottom { bottom: 8px; }
+    .light.left   { left: 8px; }
+    .light.right  { right: 8px; }
+
+    .light.top,
+    .light.bottom {
+      left: calc(18px + (var(--n) * 46px));
+    }
+
+    .light.left,
+    .light.right {
+      top: calc(18px + (var(--n) * 42px));
+    }
+
+    .screen-grid {
+      display: grid;
+      grid-template-columns: 110px 1fr 118px;
+      gap: 14px;
+      align-items: stretch;
+      position: relative;
+      z-index: 1;
+    }
+
+    .side-paytable {
+      background: #f5f2ea;
+      border-radius: 10px;
+      padding: 10px 8px;
+      border: 3px solid #111;
       display: flex;
       flex-direction: column;
       gap: 10px;
-      z-index: 20;
+      justify-content: space-between;
     }
 
-    .nav-dot {
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
-      background: rgba(17,17,17,.18);
-      transition: transform 180ms ease, background 180ms ease;
+    .pay-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .pay-icon {
+      font-size: 24px;
+      width: 34px;
+      text-align: center;
+    }
+
+    .pay-mult {
+      color: #d3362d;
+    }
+
+    .reel-area {
+      background: linear-gradient(180deg, #f8f4ec 0%, #f0ebe2 100%);
+      border-radius: 12px;
+      padding: 12px;
+      border: 4px solid #111;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 12px;
+      min-height: 450px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .center-banner {
+      background: linear-gradient(180deg, #0060ff 0%, #0b45cc 100%);
+      color: #ffd84c;
+      border: 4px solid #111;
+      border-radius: 10px;
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 14px;
+      box-shadow: inset 0 -6px 0 rgba(255,255,255,.08);
+    }
+
+    .center-banner h1 {
+      margin: 0;
+      font-family: "Anton", Impact, sans-serif;
+      font-size: clamp(34px, 4vw, 64px);
+      line-height: .9;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+    }
+
+    .result-message {
+      background: #111;
+      color: #fff;
+      border-radius: 10px;
+      border: 4px solid #111;
+      padding: 14px 14px 16px;
+      min-height: 108px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .result-headline {
+      font-family: "Anton", Impact, sans-serif;
+      font-size: clamp(28px, 3.4vw, 54px);
+      line-height: .9;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      color: #fff04a;
+      min-height: 40px;
+    }
+
+    .result-sub {
+      font-size: 15px;
+      line-height: 1.5;
+      color: #f1f1f1;
+      min-height: 22px;
+    }
+
+    .slot-window {
+      background: #0f0f0f;
+      border-radius: 12px;
+      border: 4px solid #111;
+      padding: 14px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      align-items: center;
+      justify-items: center;
+      position: relative;
+    }
+
+    .slot-window::before,
+    .slot-window::after {
+      content: "";
+      position: absolute;
+      left: 10px;
+      right: 10px;
+      height: 28px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .slot-window::before {
+      top: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,.45), transparent);
+    }
+
+    .slot-window::after {
+      bottom: 0;
+      background: linear-gradient(0deg, rgba(0,0,0,.45), transparent);
+    }
+
+    .reel {
+      width: 100%;
+      max-width: 150px;
+      height: 190px;
+      background: #fff;
+      border-radius: 12px;
+      border: 4px solid #111;
+      overflow: hidden;
+      position: relative;
+      box-shadow: inset 0 -6px 0 rgba(0,0,0,.06);
+    }
+
+    .reel-strip {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      transition: transform 2.2s cubic-bezier(.16,1,.3,1);
+    }
+
+    .symbol {
+      height: 190px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 8px;
+      padding: 10px;
+      user-select: none;
+    }
+
+    .symbol-emoji {
+      font-size: 72px;
+      line-height: 1;
+      filter: saturate(1.1);
+    }
+
+    .symbol-name {
+      font-family: "Anton", Impact, sans-serif;
+      font-size: 24px;
+      line-height: .9;
+      text-transform: uppercase;
+      letter-spacing: .02em;
+      text-align: center;
+    }
+
+    .reel-glow {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      box-shadow: inset 0 0 0 3px rgba(255,255,255,.08);
+      border-radius: 8px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .arcade-btn,
+    .info-btn {
+      border: 3px solid #111;
+      border-radius: 10px;
+      padding: 13px 18px;
+      background: #fff;
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .06em;
       cursor: pointer;
+      box-shadow: 5px 5px 0 rgba(0,0,0,.12);
+      transition: transform .15s ease;
     }
 
-    .nav-dot.active {
-      background: var(--text);
-      transform: scale(1.2);
+    .arcade-btn:hover,
+    .info-btn:hover {
+      transform: translate(-2px, -2px);
     }
 
-    .fade-stagger > * {
+    .arcade-btn.primary {
+      background: #ff3b30;
+      color: #fff;
+    }
+
+    .lever-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      justify-content: flex-start;
+    }
+
+    .lever-panel {
+      width: 100%;
+      background: linear-gradient(180deg, #d4d0cb 0%, #b8b3ad 100%);
+      border-radius: 12px;
+      padding: 12px;
+      border: 3px solid #111;
+      box-shadow: inset 0 -5px 0 rgba(0,0,0,.08);
+    }
+
+    .coin-box {
+      background: #0f0f0f;
+      color: #fff;
+      border-radius: 10px;
+      border: 3px solid #111;
+      padding: 10px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      line-height: 1.4;
+    }
+
+    .lever {
+      width: 100px;
+      height: 250px;
+      position: relative;
+      margin: 0 auto;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .lever-stick {
+      position: absolute;
+      left: 50%;
+      top: 18px;
+      width: 12px;
+      height: 170px;
+      transform: translateX(-50%) rotate(0deg);
+      transform-origin: top center;
+      background: linear-gradient(180deg, #444 0%, #111 100%);
+      border-radius: 8px;
+      transition: transform .45s cubic-bezier(.2,.9,.2,1);
+      box-shadow: inset 0 -6px 0 rgba(255,255,255,.1);
+    }
+
+    .lever-ball {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      width: 38px;
+      height: 38px;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff 0%, #ff6157 30%, #d91e15 100%);
+      border: 3px solid #111;
+      box-shadow: 0 6px 14px rgba(0,0,0,.16);
+    }
+
+    .lever-base {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 78px;
+      height: 54px;
+      transform: translateX(-50%);
+      border-radius: 12px;
+      background: linear-gradient(180deg, #222 0%, #0f0f0f 100%);
+      border: 3px solid #111;
+    }
+
+    .lever.pulled .lever-stick {
+      transform: translateX(-50%) rotate(26deg);
+    }
+
+    .machine-bottom {
+      margin-top: 18px;
+      background: linear-gradient(180deg, #151515 0%, #070707 100%);
+      border-radius: 14px;
+      padding: 18px;
+      border: 4px solid #111;
+      color: #fff;
+    }
+
+    .share-card {
+      background: linear-gradient(180deg, #1152eb 0%, #0c3bb0 100%);
+      border: 4px solid #111;
+      border-radius: 14px;
+      padding: 18px;
+      min-height: 220px;
+      display: grid;
+      grid-template-columns: 1fr 180px;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .share-title {
+      font-family: "Anton", Impact, sans-serif;
+      font-size: clamp(34px, 4.5vw, 64px);
+      line-height: .9;
+      text-transform: uppercase;
+      color: #ffe25f;
+      letter-spacing: -0.02em;
+    }
+
+    .share-copy {
+      margin-top: 10px;
+      font-size: 14px;
+      line-height: 1.7;
+      max-width: 420px;
+    }
+
+    .share-badge {
+      display: inline-block;
+      margin-top: 10px;
+      background: #fff;
+      color: #111;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    .share-poster {
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      background: #e7e4e1;
+      border: 4px solid #111;
+      border-radius: 14px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      padding: 14px;
+    }
+
+    .poster-fruit {
+      position: absolute;
+      right: 8px;
+      top: 10px;
+      font-size: 84px;
+      transform: rotate(-8deg);
+    }
+
+    .poster-text {
+      position: relative;
+      z-index: 1;
+      font-family: "Anton", Impact, sans-serif;
+      font-size: 26px;
+      line-height: .9;
+      text-transform: uppercase;
+      max-width: 120px;
+    }
+
+    .side-info {
+      display: grid;
+      gap: 18px;
+    }
+
+    .card {
+      background: rgba(255,255,255,.62);
+      border: 2px solid rgba(0,0,0,.08);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 16px 36px rgba(0,0,0,.06);
+    }
+
+    .card h2,
+    .card h3,
+    .card p {
+      margin: 0;
+    }
+
+    .card h2 {
+      font-family: "Anton", Impact, sans-serif;
+      font-size: clamp(40px, 5vw, 72px);
+      line-height: .9;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+    }
+
+    .card h3 {
+      font-family: "Anton", Impact, sans-serif;
+      font-size: 34px;
+      line-height: .95;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+    }
+
+    .card p {
+      margin-top: 12px;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .pill {
+      border: 2px solid #111;
+      background: #fff;
+      border-radius: 8px;
+      padding: 9px 12px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      box-shadow: 4px 4px 0 rgba(0,0,0,.08);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .reveal-block {
+      transition: opacity .5s ease, transform .5s ease;
+    }
+
+    .reveal-block.hidden {
+      display: block;
       opacity: 0;
       transform: translateY(14px);
-      animation: itemIn 700ms ease forwards;
+      pointer-events: none;
+      height: 0;
+      overflow: hidden;
+      padding: 0;
+      margin: 0;
+      border: none;
     }
 
-    .fade-stagger > *:nth-child(1) { animation-delay: .06s; }
-    .fade-stagger > *:nth-child(2) { animation-delay: .16s; }
-    .fade-stagger > *:nth-child(3) { animation-delay: .26s; }
-    .fade-stagger > *:nth-child(4) { animation-delay: .36s; }
-    .fade-stagger > *:nth-child(5) { animation-delay: .46s; }
-    .fade-stagger > *:nth-child(6) { animation-delay: .56s; }
+    .reveal-block.show {
+      opacity: 1;
+      transform: translateY(0);
+      height: auto;
+      pointer-events: auto;
+    }
 
-    @keyframes itemIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
+    @media (max-width: 1120px) {
+      .wrap {
+        grid-template-columns: 1fr;
       }
     }
 
-    @media (max-width: 960px) {
-      .opening-layout,
-      .result-layout,
-      .about-layout {
+    @media (max-width: 760px) {
+      .screen-grid {
         grid-template-columns: 1fr;
       }
 
-      .choice-grid,
-      .info-grid {
+      .side-paytable {
+        order: 2;
+      }
+
+      .lever-area {
+        order: 3;
+      }
+
+      .share-card {
         grid-template-columns: 1fr;
       }
 
-      .opening-art {
-        min-height: 520px;
-      }
-
-      .main-word {
-        max-width: 320px;
-      }
-
-      .nav-dots { display: none; }
-    }
-
-    @media (max-width: 640px) {
-      .section {
-        padding: 22px 14px;
-      }
-
-      .opening-art {
-        min-height: 440px;
-      }
-
-      .poster-panel,
-      .choice-poster,
-      .info-box {
-        padding: 18px;
-      }
-
-      .choice-big {
-        max-width: 70%;
-      }
-
-      .main-word {
-        font-size: clamp(48px, 15vw, 90px);
-        left: 2%;
-        top: 20%;
+      .share-poster {
+        max-width: 220px;
       }
     }
   </style>
 </head>
 <body>
-  <div class="nav-dots" id="navDots"></div>
-
-  <div class="wrap">
-
-    <!-- Opening -->
-    <section class="section active" id="section-opening">
-      <div class="container">
-        <div class="opening-layout">
-          <div class="opening-copy fade-stagger">
-            <div class="eyebrow">Interactive application experience</div>
-            <h1 class="poster-title">FRUTO<br>TO YOU</h1>
-            <p class="poster-subtitle">
-              Talk to you, through fruit.
-            </p>
-            <p class="body-text" style="margin-top:18px;">
-              This is a small campaign idea for how I would approach marketing for FRUTO,
-              and also a different way to introduce myself.
-            </p>
-            <div class="button-row">
-              <button onclick="goToSection(1)">Start</button>
+  <main class="page">
+    <div class="wrap">
+      <section class="machine">
+        <div class="machine-top">
+          <div class="machine-header">
+            <div>
+              <div class="micro">Fruit machine / interactive demo</div>
+              <div class="brand">FRUTO TO YOU</div>
             </div>
-          </div>
 
-          <div class="opening-art fade-stagger">
-            <div class="fruit-collage">
-              <div class="sticker-outline outline-yellow"></div>
-              <div class="sticker-outline outline-green"></div>
-              <div class="sticker-outline outline-white"></div>
-
-              <div class="fruit-inner">
-                <div class="leaf"></div>
-                <div class="pineapple"></div>
+            <div class="scoreboard-wrap">
+              <div class="scorebox">
+                <div class="label">Bonus-Win</div>
+                <div class="led" id="bonusLed">000</div>
               </div>
-
-              <div class="main-word">FRUTO<br>TO YOU</div>
-
-              <div class="tag-sticker opening-tag">
-                TALK TO YOU
-                <small>MARKETING IDEA / 2026</small>
+              <div class="scorebox">
+                <div class="label">Credit</div>
+                <div class="led" id="creditLed">001</div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- Choice -->
-    <section class="section" id="section-choice">
-      <div class="container">
-        <div class="choice-head fade-stagger">
-          <div class="eyebrow">Step 1</div>
-          <h2 class="poster-title" style="font-size:clamp(48px,9vw,120px);">What do you need today?</h2>
-          <p class="body-text" style="margin-top:12px;">Start with a feeling, not a product.</p>
-        </div>
+          <div class="arcade-screen">
+            <div class="light-border" id="lightBorder"></div>
 
-        <div class="choice-grid fade-stagger">
-          <button class="choice-poster" onclick="showResult('energy')">
-            <div class="choice-number">01 / ENERGY</div>
-            <div class="mini-collage">
-              <div class="sticker-outline outline-yellow"></div>
-              <div class="sticker-outline outline-green"></div>
-              <div class="sticker-outline outline-white"></div>
-              <div class="mini-shape"></div>
-            </div>
-            <div class="choice-big">Need<br>Energy</div>
-          </button>
+            <div class="screen-grid">
+              <div class="side-paytable">
+                <div class="pay-item"><span class="pay-icon">🍊</span><span class="pay-mult">x2</span></div>
+                <div class="pay-item"><span class="pay-icon">🍌</span><span class="pay-mult">x3</span></div>
+                <div class="pay-item"><span class="pay-icon">🍓</span><span class="pay-mult">x5</span></div>
+                <div class="pay-item"><span class="pay-icon">🥝</span><span class="pay-mult">x2</span></div>
+                <div class="pay-item"><span class="pay-icon">🍍</span><span class="pay-mult">x4</span></div>
+                <div class="pay-item"><span class="pay-icon">🍎</span><span class="pay-mult">x2</span></div>
+              </div>
 
-          <button class="choice-poster" onclick="showResult('light')">
-            <div class="choice-number">02 / LIGHT</div>
-            <div class="mini-collage">
-              <div class="sticker-outline outline-yellow"></div>
-              <div class="sticker-outline outline-green"></div>
-              <div class="sticker-outline outline-white"></div>
-              <div class="mini-shape green"></div>
-            </div>
-            <div class="choice-big">Want<br>Light</div>
-          </button>
+              <div class="reel-area">
+                <div class="center-banner">
+                  <h1>Pull the lever.<br>See what today gives you.</h1>
+                </div>
 
-          <button class="choice-poster" onclick="showResult('comfort')">
-            <div class="choice-number">03 / COMFORT</div>
-            <div class="mini-collage">
-              <div class="sticker-outline outline-yellow"></div>
-              <div class="sticker-outline outline-green"></div>
-              <div class="sticker-outline outline-white"></div>
-              <div class="mini-shape red"></div>
-            </div>
-            <div class="choice-big">Need<br>Comfort</div>
-          </button>
+                <div class="result-message">
+                  <div class="result-headline" id="resultHeadline">Insert coin to start</div>
+                  <div class="result-sub" id="resultSub">A fruit machine that talks to you.</div>
+                </div>
 
-          <button class="choice-poster" onclick="showResult('refreshing')">
-            <div class="choice-number">04 / REFRESHING</div>
-            <div class="mini-collage">
-              <div class="sticker-outline outline-yellow"></div>
-              <div class="sticker-outline outline-green"></div>
-              <div class="sticker-outline outline-white"></div>
-              <div class="mini-shape purple"></div>
-            </div>
-            <div class="choice-big">Want<br>Refresh</div>
-          </button>
-        </div>
+                <div class="slot-window">
+                  <div class="reel">
+                    <div class="reel-strip" id="reel1"></div>
+                    <div class="reel-glow"></div>
+                  </div>
+                  <div class="reel">
+                    <div class="reel-strip" id="reel2"></div>
+                    <div class="reel-glow"></div>
+                  </div>
+                  <div class="reel">
+                    <div class="reel-strip" id="reel3"></div>
+                    <div class="reel-glow"></div>
+                  </div>
+                </div>
 
-        <div class="button-row">
-          <button class="button-ghost" onclick="goToSection(0)">Back</button>
-        </div>
-      </div>
-    </section>
+                <div class="controls">
+                  <button class="arcade-btn primary" id="spinBtn">Spin</button>
+                  <button class="arcade-btn" id="againBtn">Try Again</button>
+                </div>
+              </div>
 
-    <!-- Result -->
-    <section class="section" id="section-result">
-      <div class="container">
-        <div class="result-layout">
-          <div class="poster-panel fade-stagger">
-            <div class="eyebrow">FRUTO TO YOU</div>
-            <div class="result-quote" id="resultQuote">You don’t have to do everything today.</div>
-            <div class="result-fruits" id="resultFruits">Banana / Apple / Orange</div>
-            <div class="result-meta" id="resultDesc">Simple energy, easy to take in.</div>
+              <div class="lever-area">
+                <div class="lever-panel">
+                  <div class="coin-box">
+                    Credit<br>
+                    FRUTO 001
+                  </div>
 
-            <div class="button-row">
-              <button onclick="goToSection(3)">See the idea</button>
-              <button class="button-ghost" onclick="goToSection(1)">Choose again</button>
+                  <div class="lever" id="lever">
+                    <div class="lever-stick">
+                      <div class="lever-ball"></div>
+                    </div>
+                    <div class="lever-base"></div>
+                  </div>
+
+                  <div style="text-align:center; font-size:12px; font-weight:800; text-transform:uppercase; color:#444;">
+                    Pull to spin
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div class="poster-panel result-art fade-stagger">
-            <div class="fruit-collage">
-              <div class="sticker-outline outline-yellow"></div>
-              <div class="sticker-outline outline-green"></div>
-              <div class="sticker-outline outline-white"></div>
-
-              <div class="fruit-inner">
-                <div class="leaf" id="resultLeaf"></div>
-                <div class="pineapple" id="resultBody"></div>
+          <div class="machine-bottom">
+            <div class="share-card">
+              <div>
+                <div class="share-title">Send this to someone who needs it today.</div>
+                <div class="share-copy" id="shareCopy">
+                  Sometimes people don’t know what to say, so we say it for them.
+                </div>
+                <div class="share-badge" id="shareBadge">FRUTO TO YOU</div>
               </div>
 
-              <div class="main-word" id="resultWord">Energy</div>
-
-              <div class="tag-sticker" id="resultSticker">
-                BANANA
-                <small>FRUIT SELECTION</small>
+              <div class="share-poster" id="sharePoster">
+                <div class="poster-fruit" id="posterFruit">🍊</div>
+                <div class="poster-text" id="posterText">Take it easy</div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Idea -->
-    <section class="section" id="section-idea">
-      <div class="container">
-        <div class="poster-panel fade-stagger">
-          <div class="eyebrow">Concept</div>
-          <h2 class="poster-title" style="font-size:clamp(54px,8vw,120px);">This is not just fruit selection.</h2>
-          <p class="body-text" style="margin-top:18px;">
-            This is how I imagine FRUTO could communicate.
+      <aside class="side-info">
+        <div class="card">
+          <div class="micro">For FRUTO customers</div>
+          <h2>Fruit, mood, message.</h2>
+          <p>
+            This interactive page imagines a playful way for FRUTO customers to
+            pull a virtual fruit machine and receive a fruit combination with a short sentence for the day.
           </p>
-          <p class="body-text">
-            People don’t always know what fruit to buy, but they often know how they feel.
-          </p>
-          <p class="body-text">
-            So instead of asking <strong style="color:#111;">“What do you want to buy?”</strong>,
-            we ask <strong style="color:#111;">“What do you need today?”</strong>
-          </p>
-          <p class="body-text">
-            This creates a softer entry point, gives the brand a more memorable tone,
-            and turns fruit into something more personal.
+          <p>
+            The goal is to make fruit selection feel more memorable, more shareable,
+            and more emotionally connected.
           </p>
         </div>
 
-        <div class="poster-panel fade-stagger" style="margin-top:18px;">
-          <div class="statement">Turn fruit into a response, not just a product.</div>
-          <div class="button-row">
-            <button onclick="goToSection(4)">How this fits the role</button>
-            <button class="button-ghost" onclick="goToSection(2)">Back</button>
-          </div>
-        </div>
-      </div>
-    </section>
+        <div class="card reveal-block hidden" id="revealCard">
+          <div class="micro">Reveal</div>
+          <h3>This is also my way of introducing myself.</h3>
+          <p>
+            Hi, I’m 瑋豪. I created this as a concept for how FRUTO could talk to people
+            through a small interactive experience.
+          </p>
+          <p>
+            I’m applying for the Marketing Planner role, and this page is meant to show
+            how I think about content, interaction, brand tone, and shareable ideas.
+          </p>
 
-    <!-- Fit -->
-    <section class="section" id="section-fit">
-      <div class="container">
-        <div class="fade-stagger">
-          <div class="eyebrow">Marketing planner fit</div>
-          <h2 class="poster-title" style="font-size:clamp(52px,9vw,120px);">How I would market FRUTO</h2>
-        </div>
-
-        <div class="info-grid fade-stagger">
-          <div class="info-box">
-            <h3>Social Content</h3>
-            <p class="body-text">
-              Turn everyday emotions into content people want to save, repost, and relate to.
-              The fruit becomes a reason to talk, not just a product photo.
-            </p>
+          <div class="pill-row">
+            <span class="pill">Content Planning</span>
+            <span class="pill">Social Media</span>
+            <span class="pill">Short-form Video</span>
+            <span class="pill">Brand Communication</span>
           </div>
 
-          <div class="info-box">
-            <h3>Short-form Video</h3>
-            <p class="body-text">
-              Simple hands-on visuals, clean subtitles, and message-driven rhythm.
-              Low-cost production, but strong enough to build brand tone.
-            </p>
-          </div>
-
-          <div class="info-box">
-            <h3>Website Conversion</h3>
-            <p class="body-text">
-              Reduce decision fatigue through mood-based selection.
-              A more intuitive way to move people from browsing to buying.
-            </p>
-          </div>
-
-          <div class="info-box">
-            <h3>KOL / KOC</h3>
-            <p class="body-text">
-              Work with creators who share daily life naturally.
-              The product feels stronger when it appears in a real routine.
-            </p>
+          <div class="pill-row" style="margin-top:18px;">
+            <a class="pill" href="mailto:dream850317@gmail.com">Email</a>
+            <a class="pill" href="https://www.instagram.com/rotion87" target="_blank" rel="noreferrer">Instagram</a>
+            <a class="pill" href="#" target="_blank" rel="noreferrer">Portfolio</a>
+            <a class="pill" href="#" target="_blank" rel="noreferrer">Resume PDF</a>
           </div>
         </div>
 
-        <div class="poster-panel fade-stagger" style="margin-top:18px;">
-          <div class="statement">Make FRUTO feel like part of everyday life.</div>
+        <div class="card">
+          <div class="micro">Notes</div>
+          <h3>How it works</h3>
+          <p>
+            Idle mode keeps the border lights running. Pull the lever or press spin,
+            and the reels roll through different fruits before stopping on a result.
+          </p>
+          <p>
+            After the first spin, the page reveals who made it — so it still works as
+            an application piece for the interviewer.
+          </p>
         </div>
-
-        <div class="button-row">
-          <button class="button-ghost" onclick="goToSection(3)">Back</button>
-          <button onclick="goToSection(5)">About me</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- About -->
-    <section class="section" id="section-about">
-      <div class="container">
-        <div class="about-layout">
-          <div class="poster-panel fade-stagger">
-            <div class="eyebrow">About me</div>
-            <h2 class="poster-title" style="font-size:clamp(58px,9vw,128px);">Hi, I’m<br>瑋豪</h2>
-            <p class="body-text" style="margin-top:18px;">
-              I create content and ideas that make people stop for a moment.
-            </p>
-            <p class="body-text">
-              I have experience in social media content planning, visual communication,
-              short-form video production, and brand storytelling.
-            </p>
-            <p class="body-text">
-              I’m interested in turning simple products into something people can feel,
-              remember, and share.
-            </p>
-
-            <div class="tag-group">
-              <span class="tag-pill">Content Planning</span>
-              <span class="tag-pill">Social Media</span>
-              <span class="tag-pill">Short-form Video</span>
-              <span class="tag-pill">Visual Direction</span>
-              <span class="tag-pill">Brand Communication</span>
-            </div>
-          </div>
-
-          <div class="poster-panel fade-stagger">
-            <div class="eyebrow">Talk to me</div>
-            <div class="contact-list">
-              <a class="contact-pill" href="mailto:dream850317@gmail.com">Email</a>
-              <a class="contact-pill" href="https://www.instagram.com/rotion87" target="_blank">Instagram</a>
-              <a class="contact-pill" href="#" target="_blank">Portfolio</a>
-              <a class="contact-pill" href="#" target="_blank">Resume PDF</a>
-            </div>
-
-            <p class="body-text" style="margin-top:22px;">
-              FRUTO TO YOU is a small campaign idea,
-              and also a different way to introduce myself.
-            </p>
-
-            <p class="body-text" style="margin-top:18px;">
-              If this idea makes sense to you,
-              I’d love to be part of FRUTO.
-            </p>
-
-            <div class="button-row">
-              <button class="button-ghost" onclick="goToSection(4)">Back</button>
-              <button onclick="goToSection(0)">Restart</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </div>
+      </aside>
+    </div>
+  </main>
 
   <script>
-    const sections = Array.from(document.querySelectorAll('.section'));
-    const navDots = document.getElementById('navDots');
+    const symbols = [
+      { emoji: "🍊", name: "Orange" },
+      { emoji: "🍌", name: "Banana" },
+      { emoji: "🍓", name: "Strawberry" },
+      { emoji: "🥝", name: "Kiwi" },
+      { emoji: "🍍", name: "Pineapple" },
+      { emoji: "🍎", name: "Apple" }
+    ];
 
-    const resultData = {
-      energy: {
-        quote: "You don’t have to do everything today.",
-        fruits: "Banana / Apple / Orange",
-        desc: "Simple energy, easy to take in.",
-        word: "Energy",
-        sticker: "BANANA",
-        leafBg: "linear-gradient(180deg, #98ef67 0%, #7dd957 45%, #62c53d 100%)",
-        bodyBg: "linear-gradient(145deg, #f5c13b 0%, #f39a1f 70%, #ea7f16 100%)"
+    const results = [
+      {
+        combo: ["🍌", "🍎", "🍊"],
+        headline: "Take it easy",
+        sub: "You don’t have to do everything today.",
+        share: "Take it one step at a time.",
+        badge: "Energy",
+        posterFruit: "🍌",
+        posterText: "Take it easy"
       },
-      light: {
-        quote: "Take it easy. Not everything needs to be heavy.",
-        fruits: "Pear / Guava / Grapes",
-        desc: "Light taste, light mood.",
-        word: "Light",
-        sticker: "PEAR",
-        leafBg: "linear-gradient(180deg, #b6f07c 0%, #8ee25a 46%, #64c842 100%)",
-        bodyBg: "linear-gradient(145deg, #b6ef85 0%, #84d85b 70%, #5abd44 100%)"
+      {
+        combo: ["🍐", "🥝", "🍇"],
+        headline: "Keep it simple",
+        sub: "Not everything needs to be heavy today.",
+        share: "Let it be simple today.",
+        badge: "Light",
+        posterFruit: "🥝",
+        posterText: "Keep it simple"
       },
-      comfort: {
-        quote: "You’re doing better than you think.",
-        fruits: "Strawberry / Apple / Blueberry",
-        desc: "A small comfort, just for today.",
-        word: "Comfort",
-        sticker: "STRAWBERRY",
-        leafBg: "linear-gradient(180deg, #a5f16d 0%, #74d84b 46%, #4db636 100%)",
-        bodyBg: "linear-gradient(145deg, #ff7f99 0%, #ef4f6e 68%, #d93258 100%)"
+      {
+        combo: ["🍓", "🍎", "🫐"],
+        headline: "You’re doing fine",
+        sub: "You’re doing better than you think.",
+        share: "Even if it doesn’t feel like it.",
+        badge: "Comfort",
+        posterFruit: "🍓",
+        posterText: "You’re doing fine"
       },
-      refreshing: {
-        quote: "Clear your head. Start again.",
-        fruits: "Citrus / Pineapple / Kiwi",
-        desc: "Fresh, sharp, and simple.",
-        word: "Refresh",
-        sticker: "PINEAPPLE",
-        leafBg: "linear-gradient(180deg, #b3f46c 0%, #81e14e 45%, #58bf3b 100%)",
-        bodyBg: "linear-gradient(145deg, #f7b52f 0%, #ef9320 68%, #df7314 100%)"
+      {
+        combo: ["🍍", "🥝", "🍊"],
+        headline: "Start again",
+        sub: "Clear your head. Reset if you need to.",
+        share: "It’s okay to reset.",
+        badge: "Refreshing",
+        posterFruit: "🍍",
+        posterText: "Start again"
       }
-    };
+    ];
 
-    let currentSection = 0;
+    const reelEls = [
+      document.getElementById("reel1"),
+      document.getElementById("reel2"),
+      document.getElementById("reel3")
+    ];
 
-    function buildDots() {
-      navDots.innerHTML = '';
-      sections.forEach((_, index) => {
-        const dot = document.createElement('div');
-        dot.className = 'nav-dot' + (index === currentSection ? ' active' : '');
-        dot.addEventListener('click', () => goToSection(index));
-        navDots.appendChild(dot);
+    const spinBtn = document.getElementById("spinBtn");
+    const againBtn = document.getElementById("againBtn");
+    const lever = document.getElementById("lever");
+    const resultHeadline = document.getElementById("resultHeadline");
+    const resultSub = document.getElementById("resultSub");
+    const shareCopy = document.getElementById("shareCopy");
+    const shareBadge = document.getElementById("shareBadge");
+    const posterFruit = document.getElementById("posterFruit");
+    const posterText = document.getElementById("posterText");
+    const bonusLed = document.getElementById("bonusLed");
+    const revealCard = document.getElementById("revealCard");
+
+    let isSpinning = false;
+    let revealShown = false;
+
+    function buildLights() {
+      const border = document.getElementById("lightBorder");
+      const lights = [];
+
+      for (let i = 0; i < 14; i++) {
+        lights.push({ side: "top", n: i, i });
+      }
+      for (let i = 0; i < 10; i++) {
+        lights.push({ side: "right", n: i, i: 14 + i });
+      }
+      for (let i = 0; i < 14; i++) {
+        lights.push({ side: "bottom", n: i, i: 24 + i });
+      }
+      for (let i = 0; i < 10; i++) {
+        lights.push({ side: "left", n: i, i: 38 + i });
+      }
+
+      lights.forEach(item => {
+        const div = document.createElement("div");
+        div.className = `light ${item.side}`;
+        div.style.setProperty("--i", item.i);
+        div.style.setProperty("--n", item.n);
+        border.appendChild(div);
       });
     }
 
-    function updateDots() {
-      document.querySelectorAll('.nav-dot').forEach((dot, index) => {
-        dot.classList.toggle('active', index === currentSection);
+    function createSymbolNode(symbol) {
+      const div = document.createElement("div");
+      div.className = "symbol";
+      div.innerHTML = `
+        <div class="symbol-emoji">${symbol.emoji}</div>
+        <div class="symbol-name">${symbol.name}</div>
+      `;
+      return div;
+    }
+
+    function buildReels() {
+      reelEls.forEach(reel => {
+        reel.innerHTML = "";
+        const reelSymbols = [];
+
+        for (let round = 0; round < 12; round++) {
+          symbols.forEach(symbol => reelSymbols.push(symbol));
+        }
+
+        reelSymbols.forEach(symbol => {
+          reel.appendChild(createSymbolNode(symbol));
+        });
       });
     }
 
-    function resetStagger(section) {
-      section.querySelectorAll('.fade-stagger').forEach(node => {
-        const clone = node.cloneNode(true);
-        node.parentNode.replaceChild(clone, node);
+    function setIdleResult() {
+      resultHeadline.textContent = "Insert coin to start";
+      resultSub.textContent = "A fruit machine that talks to you.";
+      shareCopy.textContent = "Sometimes people don’t know what to say, so we say it for them.";
+      shareBadge.textContent = "FRUTO TO YOU";
+      posterFruit.textContent = "🍊";
+      posterText.textContent = "Take it easy";
+      bonusLed.textContent = "000";
+    }
+
+    function pullLeverAnimation() {
+      lever.classList.add("pulled");
+      setTimeout(() => {
+        lever.classList.remove("pulled");
+      }, 500);
+    }
+
+    function getNameFromEmoji(emoji) {
+      const map = {
+        "🍊": "Orange",
+        "🍌": "Banana",
+        "🍓": "Strawberry",
+        "🥝": "Kiwi",
+        "🍍": "Pineapple",
+        "🍎": "Apple",
+        "🍐": "Pear",
+        "🍇": "Grapes",
+        "🫐": "Blueberry"
+      };
+      return map[emoji] || "Fruit";
+    }
+
+    function makeFinalStrip(finalEmoji) {
+      const fullList = [];
+      for (let i = 0; i < 10; i++) {
+        symbols.forEach(symbol => fullList.push(symbol));
+      }
+
+      const finalSymbol = { emoji: finalEmoji, name: getNameFromEmoji(finalEmoji) };
+      fullList.push(finalSymbol);
+
+      return fullList;
+    }
+
+    function renderFinalStrip(reelEl, stripData) {
+      reelEl.innerHTML = "";
+      stripData.forEach(item => {
+        reelEl.appendChild(createSymbolNode(item));
       });
     }
 
-    function goToSection(index) {
-      if (index < 0 || index >= sections.length || index === currentSection) return;
+    function spinMachine() {
+      if (isSpinning) return;
+      isSpinning = true;
 
-      const current = sections[currentSection];
-      current.classList.remove('show');
+      document.body.classList.add("machine-active");
+      pullLeverAnimation();
+
+      resultHeadline.textContent = "Spinning";
+      resultSub.textContent = "Please wait for today’s result...";
+      bonusLed.textContent = "888";
+
+      const chosen = results[Math.floor(Math.random() * results.length)];
+
+      const strips = chosen.combo.map(finalEmoji => makeFinalStrip(finalEmoji));
+      strips.forEach((strip, index) => renderFinalStrip(reelEls[index], strip));
+
+      const targetIndex = strips[0].length - 1;
+      const symbolHeight = 190;
+
+      reelEls.forEach((reel, index) => {
+        reel.style.transition = "none";
+        reel.style.transform = "translateY(0)";
+        reel.getBoundingClientRect();
+        reel.style.transition = `transform ${2.2 + index * 0.35}s cubic-bezier(.16,1,.3,1)`;
+        reel.style.transform = `translateY(-${targetIndex * symbolHeight}px)`;
+      });
 
       setTimeout(() => {
-        current.classList.remove('active');
-        const next = sections[index];
-        next.classList.add('active');
-        resetStagger(next);
+        resultHeadline.textContent = chosen.headline;
+      }, 1800);
 
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => next.classList.add('show'));
-        });
+      setTimeout(() => {
+        resultSub.textContent = chosen.sub;
+      }, 2550);
 
-        currentSection = index;
-        updateDots();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 260);
+      setTimeout(() => {
+        shareCopy.textContent = chosen.share;
+        shareBadge.textContent = chosen.badge;
+        posterFruit.textContent = chosen.posterFruit;
+        posterText.textContent = chosen.posterText;
+      }, 2800);
+
+      setTimeout(() => {
+        document.body.classList.remove("machine-active");
+        document.body.classList.add("machine-flash");
+        bonusLed.textContent = "777";
+        setTimeout(() => document.body.classList.remove("machine-flash"), 700);
+      }, 2950);
+
+      setTimeout(() => {
+        isSpinning = false;
+        if (!revealShown) {
+          revealShown = true;
+          revealCard.classList.remove("hidden");
+          requestAnimationFrame(() => {
+            revealCard.classList.add("show");
+          });
+        }
+      }, 3400);
     }
 
-    function showResult(key) {
-      const data = resultData[key];
-      document.getElementById('resultQuote').textContent = data.quote;
-      document.getElementById('resultFruits').textContent = data.fruits;
-      document.getElementById('resultDesc').textContent = data.desc;
-      document.getElementById('resultWord').textContent = data.word;
-      document.getElementById('resultSticker').innerHTML = `${data.sticker}<small>FRUIT SELECTION</small>`;
-      document.getElementById('resultLeaf').style.background = data.leafBg;
-      document.getElementById('resultBody').style.background = data.bodyBg;
-      goToSection(2);
-    }
+    spinBtn.addEventListener("click", spinMachine);
+    againBtn.addEventListener("click", spinMachine);
+    lever.addEventListener("click", spinMachine);
 
-    setTimeout(() => {
-      document.getElementById('section-opening').classList.add('show');
-    }, 80);
-
-    buildDots();
+    buildLights();
+    buildReels();
+    setIdleResult();
   </script>
 </body>
 </html>
